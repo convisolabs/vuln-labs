@@ -23,17 +23,17 @@ db.serialize(() => {
 
   // populate with fake user
   db.run(`INSERT INTO users (user_name, user_email, user_password) 
-    VALUES ('Luiz', 'luiz@gmail.com', 'test123')`); //password: test123
+    VALUES ('Luiz', 'luiz@gmail.com', '$2a$10$vUm2hxaIe/GGxndj7ymfV.ylxpq.W2niqoFXExVEPuxhVeAX4gfg6')`); //password: test123
 
   db.run(`INSERT INTO users (user_name, user_email, user_password)
-    VALUES ('Carlos', 'carlos@gmail.com', 'test321')`); //password: test321
+    VALUES ('Carlos', 'carlos@gmail.com', '$2a$10$vUm2hxaIe/GGxndj7ymfV.ylxpq.W2niqoFXExVEPuxhVeAX4gfg6')`); //password: test123
 
   // populate with fake todo
-  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (0, 'Fazer alterações no Front', false)`);
-  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (0, 'Commitar Alterações', false)`);
-  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (0, 'Passar um café ;)', false)`);
-
   db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (1, 'Testar Alterações', false)`);
   db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (1, 'Dar feedback', false)`);
   db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (1, 'Passar um café ;)', false)`);
+
+  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (2, 'Fazer alterações no Front', false)`);
+  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (2, 'Commitar Alterações', false)`);
+  db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (2, 'Passar um café ;)', false)`);
 });
