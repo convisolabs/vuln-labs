@@ -20,6 +20,8 @@ const InputTodo = ({ setTodosChange }) => {
 
       const parseResponse = await response.json();
 
+      console.log(parseResponse);
+
       setTodosChange(true);
       setDescription("");
       // window.location = "/";

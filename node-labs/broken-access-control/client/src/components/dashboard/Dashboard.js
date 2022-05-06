@@ -14,7 +14,7 @@ const Dashboard = ({ setAuth }) => {
 
   const getProfile = async () => {
     try {
-      const res = await fetch("http://localhost:5000/dashboard/", {
+      const res = await fetch(`http://localhost:5000/dashboard/${localStorage.userId}`, {
         method: "GET",
         headers: { jwt_token: localStorage.token },
       });
@@ -33,6 +33,7 @@ const Dashboard = ({ setAuth }) => {
     e.preventDefault();
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       setAuth(false);
       toast.success("Logout successfully");
     } catch (err) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const pool = require("../db");
 const validInfo = require("../middleware/validInfo");
 const jwtGenerator = require("../utils/jwtGenerator");
@@ -21,8 +21,7 @@ router.post("/register", validInfo, async (req, res) => {
       return res.status(401).json("User already exist!");
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const bcryptPassword = await bcrypt.hash(password, salt);
+    const bcryptPassword = crypto.createHash('md5').update(password).digest('hex');
 
     let newUser = await pool.query(
       "INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *",
@@ -52,11 +51,9 @@ router.post("/login", validInfo, async (req, res) => {
     if (user.rows.length === 0) {
       return res.status(401).json("Invalid Credential");
     }
+    const hashedPasswdInput = crypto.createHash('md5').update(password).digest('hex');
 
-    const validPassword = await bcrypt.compare(
-      password,
-      user.rows[0].user_password
-    );
+    const validPassword = user.rows[0].user_password === hashedPasswdInput;
 
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
