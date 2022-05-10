@@ -1,1 +1,0 @@
-para criar e popular o baco de dados SQLite basta rodar `node startDb.js` dentro do `database`

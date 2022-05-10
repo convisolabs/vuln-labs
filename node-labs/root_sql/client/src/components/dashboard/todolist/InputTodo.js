@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { toast } from "react-toastify";
 
 const InputTodo = ({ setTodosChange }) => {
   const [description, setDescription] = useState("");
@@ -19,7 +20,9 @@ const InputTodo = ({ setTodosChange }) => {
       });
 
       const parseResponse = await response.json();
-
+      if (response.status === 403) {
+        toast.error(parseResponse);
+      }
       setTodosChange(true);
       setDescription("");
       // window.location = "/";

@@ -13,6 +13,8 @@ router.post("/register", validInfo, async (req, res) => {
     const existingUser = await User.findOne({ user_email: email });
     if (existingUser) return res.status(400).send("Usuário já cadastrado com esse email");
 
+    // uma boa prática é ter nome distinto quando o dado que é enviado na requisição
+    // e de como ele é salvo no banco de dados
     const user = await User.create({
       user_email: email,
       user_name: name,
@@ -35,11 +37,13 @@ router.post("/login", validInfo, async (req, res) => {
     const user = await User.findOne({ user_email: email });
 
     if (!user) {
+      // não devemos expor qual das credenciais está incorreta
       return res.status(401).json("Credenciais inválidas");
     }
     const validPassword = user.authenticate(password);
 
     if (!validPassword) {
+      // não devemos expor qual das credenciais está incorreta
       return res.status(401).json("Credenciais inválidas");
     }
 

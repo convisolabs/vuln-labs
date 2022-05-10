@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const authorize = require("../middleware/authorize");
+const validDescription = require("../middleware/validDescription");
 const pool = require("../db");
 
 //all todos and name
@@ -19,8 +20,8 @@ router.get("/", authorize, async (req, res) => {
 });
 
 //create a todo
-
-router.post("/todos", authorize, async (req, res) => {
+// Devemos sempre buscar validar os campos enviados
+router.post("/todos", [authorize, validDescription], async (req, res) => {
   try {
     const { description } = req.body;
     const newTodo = await pool.query(
@@ -36,7 +37,7 @@ router.post("/todos", authorize, async (req, res) => {
 
 //update a todo
 
-router.put("/todos/:id", authorize, async (req, res) => {
+router.put("/todos/:id", [authorize, validDescription], async (req, res) => {
   try {
     const { id } = req.params;
     const { description } = req.body;
@@ -57,7 +58,7 @@ router.put("/todos/:id", authorize, async (req, res) => {
 
 //delete a todo
 
-router.delete("/todos/:id", authorize, async (req, res) => {
+router.delete("/todos/:id", [authorize, validDescription], async (req, res) => {
   try {
     const { id } = req.params;
     const deleteTodo = await pool.query(
