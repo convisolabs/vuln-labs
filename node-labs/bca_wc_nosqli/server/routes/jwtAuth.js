@@ -13,7 +13,7 @@ router.post("/register", validInfo, async (req, res) => {
     const existingUser = await User.findOne({ user_email: email });
     if (existingUser) return res.status(400).send("Usuário já cadastrado com esse email");
 
-    const user = await User.save({
+    const user = await User.create({
       user_email: email,
       user_name: name,
       user_password: password

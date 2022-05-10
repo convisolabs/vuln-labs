@@ -5,6 +5,7 @@ const Todo = require('../models/todo');
 router.get("/", authorize, async (req, res) => {
   try {
     // url to NoSQLInjection: http://localhost:5000/dashboard?id[$ne]=000000000000000000000000
+    // in Express, id[$ne]=0 == id:{ $ne: 0 }
     const todos = await Todo.find({ user_id: req.query.id })
     res.json(todos);
   } catch (err) {
@@ -15,14 +16,16 @@ router.get("/", authorize, async (req, res) => {
 
 router.post("/todos", authorize, async (req, res) => {
   try {
+    console.log(req.body)
     const { description } = req.body;
-    const newTodo = await Todo.save({
+    const newTodo = await Todo.create({
       description,
       user_id: req.user.id
     });
 
     res.json(newTodo);
   } catch (err) {
+    console.log(err)
     res.status(500).send("Erro no Servidor");
   }
 });
