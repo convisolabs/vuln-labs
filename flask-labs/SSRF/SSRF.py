@@ -17,7 +17,8 @@ def ssrf():
     url = request.form['url']
     # protocol = str(urlparse(url).scheme)
     # hostServ = str(urlparse(url).netloc)
-    # isLocalService = "127.0.0.1" in hostServ or "0.0.0.0" in hostServ or "localhost" in hostServ
+    # localPattern = ["127.0.0.1", "0.0.0.0", "localhost", "192.168", ":::"]
+    # isLocalService = any(x in hostServ for x in localPattern)
     # if not validators.url(url) or "http" not in protocol or isLocalService:
     if not validators.url(url) or "http" not in str(urlparse(url).scheme):
         return render_template("index.html", result = "The URL schema is not valid.")
