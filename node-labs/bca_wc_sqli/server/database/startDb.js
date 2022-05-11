@@ -23,10 +23,10 @@ db.serialize(() => {
 
   // populate with fake user
   db.run(`INSERT INTO users (user_name, user_email, user_password) 
-    VALUES ('Luiz', 'luiz@gmail.com', '$2a$10$vUm2hxaIe/GGxndj7ymfV.ylxpq.W2niqoFXExVEPuxhVeAX4gfg6')`); //password: test123
+    VALUES ('Luiz', 'luiz@gmail.com', 'cc03e747a6afbbcbf8be7668acfebee5')`); //password: test123
 
   db.run(`INSERT INTO users (user_name, user_email, user_password)
-    VALUES ('Carlos', 'carlos@gmail.com', '$2a$10$vUm2hxaIe/GGxndj7ymfV.ylxpq.W2niqoFXExVEPuxhVeAX4gfg6')`); //password: test123
+    VALUES ('Carlos', 'carlos@gmail.com', 'cc03e747a6afbbcbf8be7668acfebee5')`); //password: test123
 
   // populate with fake todo
   db.run(`INSERT INTO todos (user_id, description, is_done) VALUES (1, 'Testar Alterações', false)`);

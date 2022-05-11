@@ -4,16 +4,21 @@ const validInfo = require("../middleware/validInfo");
 const jwtGenerator = require("../utils/jwtGenerator");
 const authorize = require("../middleware/authorize");
 const User = require("../models/user");
+// sanitize mongo input
+const sanitize = require('mongo-sanitize');
+
 
 //authorizeentication
 
 router.post("/register", validInfo, async (req, res) => {
-  const { email, name, password } = req.body;
+  let { email, name, password } = req.body;
+  email = sanitize(email);
+
   try {
     const existingUser = await User.findOne({ user_email: email });
     if (existingUser) return res.status(400).send("Usuário já cadastrado com esse email");
 
-    const user = await User.save({
+    const user = await User.create({
       user_email: email,
       user_name: name,
       user_password: password
@@ -29,8 +34,8 @@ router.post("/register", validInfo, async (req, res) => {
 });
 
 router.post("/login", validInfo, async (req, res) => {
-  const { email, password } = req.body;
-
+  let { email, password } = req.body;
+  email = sanitize(email);
   try {
     const user = await User.findOne({ user_email: email });
 

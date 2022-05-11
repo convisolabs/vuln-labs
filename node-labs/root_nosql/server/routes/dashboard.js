@@ -1,10 +1,13 @@
 const router = require("express").Router();
 const authorize = require("../middleware/authorize");
 const Todo = require('../models/todo');
+// sanitize mongo input
+const sanitize = require('mongo-sanitize');
 
 router.get("/", authorize, async (req, res) => {
   try {
-    const todos = await Todo.find({ user_id: req.user.id })
+    const user_id = sanitize(req.user.id);
+    const todos = await Todo.find({ user_id })
     res.json(todos);
   } catch (err) {
     console.log(err)
@@ -15,9 +18,10 @@ router.get("/", authorize, async (req, res) => {
 router.post("/todos", authorize, async (req, res) => {
   try {
     const { description } = req.body;
-    const newTodo = await Todo.save({
+    const user_id = sanitize(req.user.id);
+    const newTodo = await Todo.create({
       description,
-      user_id: req.user.id
+      user_id
     });
 
     res.json(newTodo);
@@ -28,12 +32,14 @@ router.post("/todos", authorize, async (req, res) => {
 
 router.put("/todos/:id", authorize, async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = sanitize(req.params.id);
+    const user_id = sanitize(req.user.id);
     const { description } = req.body;
+    console.log(id, user_id)
     const updateTodo = await Todo.findOneAndUpdate(
       {
         _id: id,
-        user_id: req.user.id
+        user_id
       },
       {
         description
@@ -45,14 +51,17 @@ router.put("/todos/:id", authorize, async (req, res) => {
 
     res.json("Todo Atualizado");
   } catch (err) {
+    console.log(err)
     res.status(500).send("Erro no Servidor");
   }
 });
 
 router.delete("/todos/:id", authorize, async (req, res) => {
   try {
-    const { id } = req.params;
-    const todo = await Todo.findOneAndDelete({ _id: id, user_id: req.user.id });
+    const id = sanitize(req.params.id);
+    const user_id = sanitize(req.user.id);
+
+    const todo = await Todo.findOneAndDelete({ _id: id, user_id });
 
     if (!todo) {
       return res.status(401).json("Todo Não Pertence a você");
