@@ -1,25 +1,25 @@
 writeup: https://github.com/blabla1337/skf-labs/blob/master/md/Python/kbid-262-server-side-request-forgery.md
 
-Baixe as dependênciais rodando `pip3 install -r requirements.txt`
-
-Para Comprovar a vulnerabilidade desse laboratório, devemos ter o pacote nmap, ou outro software para realizar scan das portas
-
 Exploit:
-  1. Rode a aplicação com `python3 SSRF.py`;
-  2. Rode o script `run_services.sh` para escutar as portas 3306 e 5432;
-  3. Realize o scan das portas abertas, se estiver usando nmap rode: `nmap -vvvv -sT -sV -P0 ip_da_maquina`, ip_da_maquina=127.0.0.1 se estiver rodando local;
-  4. Note que a porta 3306 não é encontrada no scan;
-  5. Na rota `/check_existence`, teste alguns sites conhecidos e outros errados e cheque a validade da aplicação;
-  6. Envie `http://127.0.0.1:3306` e verifique que encontramos o serviço mesmo não encontrando-o via nmap.
+  1. Realize o build do container Docker `docker build -t pythonssrf .`;
+  2. Rode o container com `docker run -p 5000:5000 pythonssrf`;
+  3. Acesse a aplicação rodando na porta 5000;
+  4. Rode a aplicação com `python3 SSRF.py`;
+  5. No input da página inicial, teste a existência de alguns websites;
+  7. Acesse o container rodando `docker exec -it container_id bash`;
+  8. Dentro do container, rode `netstat -tulpn` e perceba que temos duas portas abertas rodando netcat;
+  9. Rode `docker port container_id` e perceba que somente a porta 5000 está a mostra;
+  10. Escolha uma das portas do netcat e, na página inicial da aplicação, teste a existência de um serviço nessa porta (se estiver em localhost, `http://127.0.0.1:nc_port`);
+  11. Perceba que existe um serviço acessável, comprovando o SSRF;
 
 Solução:
-  1. Para prevenir acesso aos serviços internos, troque o if do handler `check_existence` por:
+  1. Devemos aplicar políticas de allow-list para evitarmos ataques SSRF para isso, iremos permitir somente teste de existência em URLs. Em `SSRF.py`, adicione às seguintes linhas e troque o if:
   ```
+  5. import re
   ...
-  18. protocol = str(urlparse(url).scheme)
-  19. hostServ = str(urlparse(url).netloc)
-  20. localPattern = ["127.0.0.1", "0.0.0.0", "localhost", "192.168", ":::"]
-  21. isLocalService = any(x in hostServ for x in localPattern)
-  22. if not validators.url(url) or "http" not in protocol or isLocalService:
+  19. urlRegex = r"https?:\/\/(www\.)?[a-zA-Z.]{1,256}\.[a-zA-Z]{1,6}\b([a-zA-Z.]*)"
+  20. if not validators.url(url) or not re.match(urlRegex, url):
+  21. # if not validators.url(url) or "http" not in protocol:
   ...
   ```
+  2. A partir dessa nova imagem, rode e teste a aplicação (caso de build novamente, lembre de usar a flag --no-cache)

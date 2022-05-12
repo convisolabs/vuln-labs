@@ -2,6 +2,7 @@ from flask import Flask, request, url_for, render_template, redirect
 import requests, validators
 from subprocess import Popen
 from urllib.parse import urlparse
+# import re
 
 app = Flask(__name__, static_url_path = '/static', static_folder = 'static')
 app.config['DEBUG'] = True
@@ -15,12 +16,9 @@ def start():
 @app.route("/check_existence", methods = ['POST'])
 def ssrf():
     url = request.form['url']
-    # protocol = str(urlparse(url).scheme)
-    # hostServ = str(urlparse(url).netloc)
-    # localPattern = ["127.0.0.1", "0.0.0.0", "localhost", "192.168", ":::"]
-    # isLocalService = any(x in hostServ for x in localPattern)
-    # if not validators.url(url) or "http" not in protocol or isLocalService:
-    if not validators.url(url) or "http" not in str(urlparse(url).scheme):
+    # urlRegex = r"https?:\/\/(www\.)?[a-zA-Z.]{1,256}\.[a-zA-Z]{1,6}\b([a-zA-Z.]*)"
+    # if not validators.url(url) or not re.match(urlRegex, url):
+    if not validators.url(url) or "http" not in url:
         return render_template("index.html", result = "The URL schema is not valid.")
     try:
         requests.head(url, timeout=2.000)
