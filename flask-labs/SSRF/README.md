@@ -4,7 +4,6 @@ Exploit:
   1. Realize o build do container Docker `docker build -t pythonssrf .`;
   2. Rode o container com `docker run -p 5000:5000 pythonssrf`;
   3. Acesse a aplicação rodando na porta 5000;
-  4. Rode a aplicação com `python3 SSRF.py`;
   5. No input da página inicial, teste a existência de alguns websites;
   7. Acesse o container rodando `docker exec -it container_id bash`;
   8. Dentro do container, rode `netstat -tulpn` e perceba que temos duas portas abertas rodando netcat;
