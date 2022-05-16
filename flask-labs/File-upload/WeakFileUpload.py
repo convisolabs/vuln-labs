@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort, \
+  send_from_directory
+import os
 
 app = Flask(__name__, static_url_path = '/static', static_folder = 'static')
+# definindo onde salvar imagens
+app.config['UPLOAD_PATH'] = 'uploads'
 app.config['DEBUG'] = True
 
 @app.route('/')
