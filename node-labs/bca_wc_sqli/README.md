@@ -1,11 +1,7 @@
-para criar e popular o baco de dados SQLite basta rodar `node startDb.js` dentro de `server/database`
+Essa aplicação é a versão insegura da aplicação `root_sql`. Essa aplicação apresenta falhas de criptografia, broken access control e sql injection.
 
-para inicializar a aplicação, abra dois terminais e em um rode `npm run start` dentro de `client` e `npm run dev` dentro de `server`
+Para criar e popular o banco de dados SQLite basta rodar `node startDb.js` dentro de `server/database`.
 
-hints:
-  1. MD5 Utilizado para hashear senhas;
-  2. `userId` salvo em localStorage utilizado para obter dados do usuário, facilmente manipulável;
-  3. Concatenação de string em consulta de todos, abrindo espaço para injeção de comandos SQL.
+Para instalar as dependências, rode `npm i` na pasta `client` e na pasta `server`.
 
-
-Correções dessa aplicação se encontram em `root_sql`
+Para inicializar a aplicação, abra dois terminais e em um rode `npm run start` dentro de `client` e `npm run dev` dentro de `server`.
