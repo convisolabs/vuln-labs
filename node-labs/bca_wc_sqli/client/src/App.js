@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import { toast } from "react-toastify";
+import env from "react-dotenv";
 
 //components
 
@@ -22,7 +23,7 @@ toast.configure();
 function App() {
   const checkAuthenticated = async () => {
     try {
-      const res = await fetch("http://localhost:5000/authentication/verify", {
+      const res = await fetch(`${env.BACKEND_URL}/authentication/verify`, {
         method: "POST",
         headers: { jwt_token: localStorage.token },
       });

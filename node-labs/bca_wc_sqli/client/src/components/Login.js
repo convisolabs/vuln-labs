@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import env from "react-dotenv";
 
 import { toast } from "react-toastify";
 
@@ -19,7 +20,7 @@ const Login = ({ setAuth }) => {
     try {
       const body = { email, password };
       const response = await fetch(
-        "http://localhost:5000/authentication/login",
+        `${env.BACKEND_URL}/authentication/login`,
         {
           method: "POST",
           headers: {

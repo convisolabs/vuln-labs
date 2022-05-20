@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from "react";
+import { toast } from "react-toastify";
+import env from "react-dotenv";
 
 const EditTodo = ({ todo, setTodosChange }) => {
   //editText function
@@ -12,11 +14,17 @@ const EditTodo = ({ todo, setTodosChange }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwt_token", localStorage.token);
 
-      await fetch(`http://localhost:5000/dashboard/todos/${id}`, {
+      const response = await fetch(`${env.BACKEND_URL}/dashboard/todos/${id}`, {
         method: "PUT",
         headers: myHeaders,
         body: JSON.stringify(body)
       });
+
+      const parseResponse = await response.json();
+
+      if (response.status === 403) {
+        toast.error(parseResponse);
+      }
 
       setTodosChange(true);
 
