@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
+import env from "react-dotenv";
 
 const InputTodo = ({ setTodosChange }) => {
   const [description, setDescription] = useState("");
@@ -13,7 +14,7 @@ const InputTodo = ({ setTodosChange }) => {
       myHeaders.append("jwt_token", localStorage.token);
 
       const body = { description };
-      const response = await fetch("http://localhost:5000/dashboard/todos", {
+      const response = await fetch(`${env.BACKEND_URL}/dashboard/todos`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(body)

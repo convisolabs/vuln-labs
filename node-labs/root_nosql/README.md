@@ -1,9 +1,11 @@
-Essa aplicação é a versão segura, com as vulnerabilidades apresentadas em `bca_nosqli` mitigadas.
+Para rodar esse laboratório, é preciso criar um banco MongoDB, como na cloud da [Atlas](https://www.mongodb.com/atlas/database);
 
-Copie o arquivo `.env.example` para a raiz do projeto como `.env` e preencha as variáveis.
+Para instalar as dependências, rode `npm i` na pasta `client` e na pasta `server`;
 
-Para instalar as dependências, rode `npm i` na pasta `client` e na pasta `server`.
+Em `server`, copie o arquivo `.env.example` para a raiz do projeto como `.env` e preencha as variáveis;
 
-Para criar e popular o baco de dados SQLite basta rodar `node startDb.js` dentro de `server/database`
+Para rodar a aplicação, rode inicialmente o `server` como o comando `npm run dev` e copie a url do backend;
 
-Para inicializar a aplicação, abra dois terminais e em um rode `npm run start` dentro de `client` e `npm run dev` dentro de `server`
+Em `client`, copie `.env.example` na raiz como `.env` e preencha a varia´vel `BACKEND_URL` com a url do backend;
+
+Por fim, inicie o frontend em `client` com `npm run start`;

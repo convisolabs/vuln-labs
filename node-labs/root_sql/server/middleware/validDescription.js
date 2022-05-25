@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
     return res.status(403).json("Mais campos enviados do que necessários");
   }
   if (req.method === "POST" || req.method === "PUT") {
-    if (typeof description === 'string' || description.length < 3) {
+    if (typeof description !== 'string' || description.length < 3) {
       return res.status(403).json("campo 'description' deve ser string e deve ter ao menos 3 caracteres");
     }
   }

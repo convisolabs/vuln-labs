@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import EditTodo from "./EditTodo";
+import env from "react-dotenv";
 
 const ListTodos = ({ allTodos, setTodosChange }) => {
   const [todos, setTodos] = useState([]); //empty array
@@ -8,7 +9,7 @@ const ListTodos = ({ allTodos, setTodosChange }) => {
 
   async function deleteTodo(id) {
     try {
-      await fetch(`http://localhost:5000/dashboard/todos/${id}`, {
+      await fetch(`${env.BACKEND_URL}/dashboard/todos/${id}`, {
         method: "DELETE",
         headers: { jwt_token: localStorage.token }
       });

@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import env from "react-dotenv";
 
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -22,7 +23,7 @@ toast.configure();
 function App() {
   const checkAuthenticated = async () => {
     try {
-      const res = await fetch("http://localhost:5000/authentication/verify", {
+      const res = await fetch(`${env.BACKEND_URL}/authentication/verify`, {
         method: "POST",
         headers: { jwt_token: localStorage.token },
       });

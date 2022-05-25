@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
+import env from "react-dotenv";
 //components
 
 import InputTodo from "./todolist/InputTodo";
@@ -14,7 +14,7 @@ const Dashboard = ({ setAuth }) => {
 
   const getProfile = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/dashboard`, {
+      const res = await fetch(`${env.BACKEND_URL}/dashboard`, {
         method: "GET",
         headers: { jwt_token: localStorage.token },
       });

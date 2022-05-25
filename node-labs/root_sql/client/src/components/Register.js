@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import env from "react-dotenv";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -19,7 +20,7 @@ const Register = ({ setAuth }) => {
     try {
       const body = { email, password, name };
       const response = await fetch(
-        "http://localhost:5000/authentication/register",
+        `${env.BACKEND_URL}/authentication/register`,
         {
           method: "POST",
           headers: {
