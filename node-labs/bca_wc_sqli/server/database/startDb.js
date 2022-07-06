@@ -5,10 +5,12 @@ var db = new sqlite3.Database('vulndb');
 db.serialize(() => {
 
   // create users table
+  // is_logged flag used to handle unique login
   db.run(`CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER NOT NULL PRIMARY KEY,
     user_name TEXT NOT NULL,
     user_email TEXT NOT NULL UNIQUE,
+    is_logged BOOLEAN DEFAULT false,
     user_password TEXT NOT NULL
   )`);
 

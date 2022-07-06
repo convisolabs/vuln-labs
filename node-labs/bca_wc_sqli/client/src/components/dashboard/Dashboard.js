@@ -33,6 +33,10 @@ const Dashboard = ({ setAuth }) => {
   const logout = async (e) => {
     e.preventDefault();
     try {
+      await fetch(`${env.BACKEND_URL}/authentication/logout`, {
+        method: "GET",
+        headers: { jwt_token: localStorage.token },
+      });
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       setAuth(false);
