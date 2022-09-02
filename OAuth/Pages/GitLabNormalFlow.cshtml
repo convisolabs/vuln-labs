@@ -1,0 +1,16 @@
+@page
+@model GitLabNormalFlowModel
+@{
+    ViewData["Title"] = "GitLabNormalFlow";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+@if (@ViewData.ContainsKey("gitLabUser")){
+    var gitLabUser = (Models.GitLabUser)ViewData["gitLabUser"];
+    <p>Id: @gitLabUser.id</p>
+    <p>UserName: @gitLabUser.UserName</p>
+}else{
+    <p>GitLabNroamlFlow</p>
+}

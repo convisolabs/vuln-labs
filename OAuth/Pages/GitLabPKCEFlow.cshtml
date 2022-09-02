@@ -1,0 +1,14 @@
+@page
+@model GitLabPKCEFlowModel
+@{
+    ViewData["Title"] = "GitLabPCKEFlow";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (@ViewData.ContainsKey("gitLabUser")){
+    var gitLabUser = (Models.GitLabUser)ViewData["gitLabUser"];
+    <p>Id: @gitLabUser.id</p>
+    <p>UserName: @gitLabUser.UserName</p>
+}else{
+    <p>GitLabPKCEFlow</p>
+}

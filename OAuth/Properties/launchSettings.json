@@ -1,0 +1,21 @@
+﻿{
+  "profiles": {
+    "OAuth": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7290;http://localhost:5048",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "GITLAB_URI_AUTHORIZE":"https://gitlab.com/oauth/authorize",
+        "GITLAB_URI_TOKEN":"https://gitlab.com/oauth/token",
+        "GITLAB_URI_USER":"https://gitlab.com/api/v4/user",
+        "GITLAB_CLIENT_ID":"",
+        "GITLAB_CLIENT_SECRET":"",
+        "GITLAB_SCOPE":"read_repository email read_user",
+        "URI_REDIRECT_NORMAL_FLOW":"https://localhost:7290/GitLabNormalFlow",
+        "URI_REDIRECT_PKCE_FLOW":"https://localhost:7290/GitLabPKCEFlow"
+      }
+    }
+  }
+}
